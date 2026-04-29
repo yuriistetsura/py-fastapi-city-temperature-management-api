@@ -33,7 +33,7 @@ async def get_city_by_id(
 
 
 async def update_city(
-    db: AsyncSession, city_id: int, city_data: schemas.CityCreate
+    db: AsyncSession, city_id: int, city_data: schemas.CityUpdate
 ) -> models.City | None:
     city = await db.scalar(
         select(models.City).where(models.City.id == city_id)
@@ -42,8 +42,10 @@ async def update_city(
     if not city:
         return None
 
-    city.name = city_data.name
-    city.additional_info = city_data.additional_info
+    if city_data.name is not None:
+        city.name = city_data.name
+    if city_data.additional_info is not None:
+        city.additional_info = city_data.additional_info
     await db.commit()
     await db.refresh(city)
     return city

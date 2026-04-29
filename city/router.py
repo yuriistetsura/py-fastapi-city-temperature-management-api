@@ -36,7 +36,7 @@ async def read_city(
 @router.put("/cities/{city_id}", response_model=schemas.City)
 async def update_city(
     city_id: int,
-    city: schemas.CityCreate,
+    city: schemas.CityUpdate,
     db: Annotated[AsyncSession, Depends(get_db)],
 ):
     updated_city = await crud.update_city(
