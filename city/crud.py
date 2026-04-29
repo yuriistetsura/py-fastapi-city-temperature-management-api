@@ -2,7 +2,6 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from city import schemas, models
-from city.models import City
 
 
 async def create_city(
@@ -20,7 +19,7 @@ async def create_city(
     return city
 
 
-async def get_cities(db: AsyncSession) -> list[City]:
+async def get_cities(db: AsyncSession) -> list[models.City]:
     result = await db.scalars(select(models.City))
     return list(result.all())
 

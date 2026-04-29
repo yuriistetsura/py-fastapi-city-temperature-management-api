@@ -1,15 +1,16 @@
+from datetime import datetime
+
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from temperature import models
-from temperature.models import Temperature
 
 
 async def create_temperature(
     db: AsyncSession,
     city_id: int,
     temperature: float,
-    date_time,
+    date_time: datetime,
 ) -> models.Temperature:
     temp = models.Temperature(
         city_id=city_id,
@@ -25,7 +26,7 @@ async def create_temperature(
 async def get_temperature(
     db: AsyncSession,
     city_id: int | None = None,
-) -> list[Temperature]:
+) -> list[models.Temperature]:
     query = select(models.Temperature)
     if city_id is not None:
         query = query.where(models.Temperature.city_id == city_id)

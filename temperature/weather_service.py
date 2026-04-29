@@ -4,7 +4,8 @@ import httpx
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from city import crud as city_crud
-from temperature import crud, models
+from temperature import crud
+from temperature.models import Temperature
 
 GEOCODING_URL = (
     "https://geocoding-api.open-meteo.com/v1/search"
@@ -49,7 +50,7 @@ async def get_temperature_for_city(
 async def update_all_temperatures(
     db: AsyncSession,
     client: httpx.AsyncClient,
-) -> list[models.Temperature]:
+) -> list[Temperature]:
     cities = await city_crud.get_cities(db)
     results = []
 
